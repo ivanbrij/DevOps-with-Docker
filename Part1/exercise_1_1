@@ -1,0 +1,5 @@
+ivanbrij@server01:~/DevOps-with-Docker/Part1$ docker ps -a
+CONTAINER ID   IMAGE                        COMMAND                  CREATED              STATUS                            PORTS                                                                                  NAMES
+2e72ff9c5c5a   nginx                        "/docker-entrypoint.…"   58 seconds ago       Exited (0) 8 seconds ago                                                                                                 hungry_dhawan
+171c3f677ccd   nginx                        "/docker-entrypoint.…"   About a minute ago   Exited (0) 9 seconds ago                                                                                                 eager_mestorf
+b62c9ad20eb8   nginx                        "/docker-entrypoint.…"   About a minute ago   Up About a minute                 80/tcp                                                                                 recursing_thompson

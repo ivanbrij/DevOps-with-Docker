@@ -1,0 +1,5 @@
+ivanbrij@server01:~/DevOps-with-Docker/Part1$ docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+ivanbrij@server01:~/DevOps-with-Docker/Part1$ docker images
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+ivanbrij@server01:~/DevOps-with-Docker/Part1$ 
