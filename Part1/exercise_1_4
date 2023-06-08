@@ -1,3 +1,4 @@
+### Exercise 1.4 ###
 ### Command to start the container ###
 
 ivanbrij@server01:~/DevOps-with-Docker$ docker run -it ubuntu sh -c 'while true; do echo "Input website:"; read website; echo "Searching.."; sleep 1; curl http://$website; done'
