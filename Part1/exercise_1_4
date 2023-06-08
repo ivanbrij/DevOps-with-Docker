@@ -1,0 +1,28 @@
+### Command to start the container ###
+
+ivanbrij@server01:~/DevOps-with-Docker$ docker run -it ubuntu sh -c 'while true; do echo "Input website:"; read website; echo "Searching.."; sleep 1; curl http://$website; done'
+Input website:
+helsinki.fi
+Searching..
+sh: 1: curl: not found
+Input website:
+helsinki.fi
+Searching..
+<html>
+<head><title>301 Moved Permanently</title></head>
+<body>
+<center><h1>301 Moved Permanently</h1></center>
+<hr><center>nginx/1.20.1</center>
+</body>
+</html>
+Input website:
+
+
+### Commands to solve the "curl not found" issue ###
+
+ivanbrij@server01:~/DevOps-with-Docker$ docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS     NAMES
+06fe4934441a   ubuntu    "sh -c 'while true; …"   41 seconds ago   Up 39 seconds             pensive_cray
+ivanbrij@server01:~/DevOps-with-Docker$ docker exec -it pensive_cray bash
+root@06fe4934441a:/# apt-get update
+root@06fe4934441a:/# apt-get -y install curl
