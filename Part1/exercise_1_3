@@ -1,0 +1,10 @@
+ivanbrij@server01:~/DevOps-with-Docker$ docker exec -it elegant_cori bash
+root@4f309200b5be:/usr/src/app# tail -f ./text.log
+Secret message is: 'You can find the source code here: https://github.com/docker-hy'
+2023-06-08 04:17:23 +0000 UTC
+2023-06-08 04:17:25 +0000 UTC
+2023-06-08 04:17:27 +0000 UTC
+2023-06-08 04:17:29 +0000 UTC
+2023-06-08 04:17:31 +0000 UTC
+Secret message is: 'You can find the source code here: https://github.com/docker-hy'
+
