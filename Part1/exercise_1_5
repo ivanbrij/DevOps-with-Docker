@@ -1,0 +1,26 @@
+### Running the container ###
+
+ivanbrij@server01:~/DevOps-with-Docker$ docker run devopsdockeruh/simple-web-service:alpine
+Starting log output
+Wrote text to /usr/src/app/text.log
+
+### Getting the secret message ###
+
+ivanbrij@server01:~/DevOps-with-Docker$ docker ps
+CONTAINER ID   IMAGE                                      COMMAND                 CREATED          STATUS          PORTS     NAMES
+6bfca86be1e8   devopsdockeruh/simple-web-service:alpine   "/usr/src/app/server"   13 seconds ago   Up 13 seconds             epic_yalow
+ivanbrij@server01:~/DevOps-with-Docker$ docker exec -it epic_yalow sh
+/usr/src/app # tail -f ./text.log
+2023-06-08 05:18:23 +0000 UTC
+2023-06-08 05:18:25 +0000 UTC
+Secret message is: 'You can find the source code here: https://github.com/docker-hy'
+2023-06-08 05:18:27 +0000 UTC
+2023-06-08 05:18:29 +0000 UTC
+2023-06-08 05:18:31 +0000 UTC
+2023-06-08 05:18:33 +0000 UTC
+2023-06-08 05:18:35 +0000 UTC
+Secret message is: 'You can find the source code here: https://github.com/docker-hy'
+2023-06-08 05:18:37 +0000 UTC
+2023-06-08 05:18:39 +0000 UTC
+2023-06-08 05:18:41 +0000 UTC
+2023-06-08 05:18:43 +0000 UTC
