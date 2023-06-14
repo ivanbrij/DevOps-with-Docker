@@ -1,0 +1,11 @@
+## This repository has a python image with the command "python" as ENTRYPOINT and show the help when running without parameters
+
+Repository URL is: https://hub.docker.com/repository/docker/ivanbrij/my-python/general
+
+## For running the container you need to execute the following command:
+
+docker run my-python [parameter]
+
+## Example for showing python version
+
+docker run my-python --version
