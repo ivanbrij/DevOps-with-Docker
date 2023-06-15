@@ -1,0 +1,3 @@
+# For completing this exercise, I added a network for all the services in Docker-compose, called proxy-network, it doesn't work
+# Then I modified the Docker-compose to build FE and BE services from Dockerfiles, it doesn't work
+# Finally I removed ports from Docker-compose, it works

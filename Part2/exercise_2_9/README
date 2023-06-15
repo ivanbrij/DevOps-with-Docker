@@ -1,0 +1,12 @@
+# For completing this exercise, I only did changes in Docker-compose file for frontend and backend services
+
+###  Frontend service
+
+Update environment variable to go into proxy: REACT_APP_BACKEND_URL=http://localhost/api/ping
+
+### Backend service 
+
+Update environment variable to go into proxy: REQUEST_ORIGIN=http://localhost
+
+
+### No changes were performed for Dockerfiles
