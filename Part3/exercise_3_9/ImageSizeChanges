@@ -1,0 +1,40 @@
+# Before multi-stage
+
+ivanbrij@server01:~/material-applications/example-backend$ docker images example-backend
+REPOSITORY        TAG       IMAGE ID       CREATED          SIZE
+example-backend   latest    3d50410c49a3   54 minutes ago   447MB
+
+ivanbrij@server01:~/material-applications/example-backend$ docker image history example-backend
+IMAGE          CREATED          CREATED BY                                      SIZE      COMMENT
+3d50410c49a3   54 minutes ago   CMD ["/bin/sh" "-c" "./server"]                 0B        buildkit.dockerfile.v0
+<missing>      54 minutes ago   USER appuser                                    0B        buildkit.dockerfile.v0
+<missing>      54 minutes ago   RUN /bin/sh -c go build && adduser -D appuse…   146MB     buildkit.dockerfile.v0
+<missing>      58 minutes ago   COPY . . # buildkit                             28.3kB    buildkit.dockerfile.v0
+<missing>      58 minutes ago   WORKDIR /usr/src/app                            0B        buildkit.dockerfile.v0
+<missing>      58 minutes ago   EXPOSE map[8080/tcp:{}]                         0B        buildkit.dockerfile.v0
+<missing>      15 months ago    /bin/sh -c #(nop) WORKDIR /go                   0B
+<missing>      15 months ago    /bin/sh -c mkdir -p "$GOPATH/src" "$GOPATH/b…   0B
+<missing>      15 months ago    /bin/sh -c #(nop)  ENV PATH=/go/bin:/usr/loc…   0B
+<missing>      15 months ago    /bin/sh -c #(nop)  ENV GOPATH=/go               0B
+<missing>      15 months ago    /bin/sh -c set -eux;  apk add --no-cache --v…   296MB
+<missing>      15 months ago    /bin/sh -c #(nop)  ENV GOLANG_VERSION=1.16.15   0B
+<missing>      18 months ago    /bin/sh -c #(nop)  ENV PATH=/usr/local/go/bi…   0B
+<missing>      18 months ago    /bin/sh -c [ ! -e /etc/nsswitch.conf ] && ec…   17B
+<missing>      18 months ago    /bin/sh -c apk add --no-cache ca-certificates   519kB
+<missing>      19 months ago    /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B
+<missing>      19 months ago    /bin/sh -c #(nop) ADD file:9233f6f2237d79659…   5.59MB
+
+# After multi-stage
+
+Civanbrij@server01:~/material-applications/example-backend$ docker images backend-multistage
+REPOSITORY           TAG       IMAGE ID       CREATED          SIZE
+backend-multistage   latest    0d143add7fe6   58 seconds ago   18MB
+
+ivanbrij@server01:~/material-applications/example-backend$ docker image history backend-multistage
+IMAGE          CREATED         CREATED BY                              SIZE      COMMENT
+0d143add7fe6   2 minutes ago   ENTRYPOINT ["/usr/src/app/server"]      0B        buildkit.dockerfile.v0
+<missing>      2 minutes ago   EXPOSE map[8080/tcp:{}]                 0B        buildkit.dockerfile.v0
+<missing>      2 minutes ago   COPY /usr/src/app/server . # buildkit   18MB      buildkit.dockerfile.v0
+<missing>      3 minutes ago   WORKDIR /usr/src/app                    0B        buildkit.dockerfile.v0
+ivanbrij@server01:~/material-applications/example-backend$
+

@@ -1,0 +1,48 @@
+# Before multi-stage
+
+ivanbrij@server01:~/material-applications/example-frontend$ docker images example-frontend
+REPOSITORY         TAG       IMAGE ID       CREATED          SIZE
+example-frontend   latest    77f3675741bf   35 minutes ago   468MB
+
+ivanbrij@server01:~/material-applications/example-frontend$ docker image history example-frontend
+IMAGE          CREATED          CREATED BY                                      SIZE      COMMENT
+77f3675741bf   35 minutes ago   CMD ["serve" "-s" "-l" "5000" "build"]          0B        buildkit.dockerfile.v0
+<missing>      35 minutes ago   USER appuser                                    0B        buildkit.dockerfile.v0
+<missing>      35 minutes ago   RUN /bin/sh -c npm ci --only=production &&  …   350MB     buildkit.dockerfile.v0
+<missing>      37 minutes ago   COPY . . # buildkit                             707kB     buildkit.dockerfile.v0
+<missing>      37 minutes ago   WORKDIR /usr/src/app                            0B        buildkit.dockerfile.v0
+<missing>      37 minutes ago   EXPOSE map[5000/tcp:{}]                         0B        buildkit.dockerfile.v0
+<missing>      3 days ago       /bin/sh -c #(nop)  CMD ["node"]                 0B
+<missing>      3 days ago       /bin/sh -c #(nop)  ENTRYPOINT ["docker-entry…   0B
+<missing>      3 days ago       /bin/sh -c #(nop) COPY file:4d192565a7220e13…   388B
+<missing>      3 days ago       /bin/sh -c apk add --no-cache --virtual .bui…   7.76MB
+<missing>      3 days ago       /bin/sh -c #(nop)  ENV YARN_VERSION=1.22.19     0B
+<missing>      3 days ago       /bin/sh -c addgroup -g 1000 node     && addu…   102MB
+<missing>      3 days ago       /bin/sh -c #(nop)  ENV NODE_VERSION=16.20.0     0B
+<missing>      3 days ago       /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B
+<missing>      3 days ago       /bin/sh -c #(nop) ADD file:1da756d12551a0e3e…   7.33MB
+
+# After multi-stage
+
+ivanbrij@server01:~/material-applications/example-frontend$ docker images frontend-multistage
+REPOSITORY            TAG       IMAGE ID       CREATED         SIZE
+frontend-multistage   latest    6cff3bef83c3   7 seconds ago   129MB
+
+ivanbrij@server01:~/material-applications/example-frontend$ docker image history frontend-multistage
+IMAGE          CREATED             CREATED BY                                      SIZE      COMMENT
+6cff3bef83c3   4 minutes ago       ENTRYPOINT ["serve" "-s" "-l" "5000" "build"]   0B        buildkit.dockerfile.v0
+<missing>      4 minutes ago       COPY /usr/src/app/build/ build/ # buildkit      1.19MB    buildkit.dockerfile.v0
+<missing>      5 minutes ago       RUN /bin/sh -c npm install -g serve # buildk…   10.6MB    buildkit.dockerfile.v0
+<missing>      13 minutes ago      COPY package.json ./ # buildkit                 687B      buildkit.dockerfile.v0
+<missing>      13 minutes ago      EXPOSE map[5000/tcp:{}]                         0B        buildkit.dockerfile.v0
+<missing>      About an hour ago   WORKDIR /usr/src/app                            0B        buildkit.dockerfile.v0
+<missing>      3 days ago          /bin/sh -c #(nop)  CMD ["node"]                 0B
+<missing>      3 days ago          /bin/sh -c #(nop)  ENTRYPOINT ["docker-entry…   0B
+<missing>      3 days ago          /bin/sh -c #(nop) COPY file:4d192565a7220e13…   388B
+<missing>      3 days ago          /bin/sh -c apk add --no-cache --virtual .bui…   7.76MB
+<missing>      3 days ago          /bin/sh -c #(nop)  ENV YARN_VERSION=1.22.19     0B
+<missing>      3 days ago          /bin/sh -c addgroup -g 1000 node     && addu…   102MB
+<missing>      3 days ago          /bin/sh -c #(nop)  ENV NODE_VERSION=16.20.0     0B
+<missing>      3 days ago          /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B
+<missing>      3 days ago          /bin/sh -c #(nop) ADD file:1da756d12551a0e3e…   7.33MB
+ivanbrij@server01:~/material-applications/example-frontend$

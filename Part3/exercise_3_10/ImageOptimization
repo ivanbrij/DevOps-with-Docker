@@ -1,0 +1,51 @@
+### Repository
+
+https://github.com/ivanbrij/express-app
+
+# Image before optimization
+
+ivanbrij@server01:~/express-app$ docker images express-app
+REPOSITORY    TAG       IMAGE ID       CREATED         SIZE
+express-app   latest    51f8df057721   4 seconds ago   914MB
+
+ivanbrij@server01:~/express-app$ docker image history express-app
+IMAGE          CREATED          CREATED BY                                      SIZE      COMMENT
+51f8df057721   14 seconds ago   CMD ["/bin/sh" "-c" "node index.js"]            0B        buildkit.dockerfile.v0
+<missing>      14 seconds ago   RUN /bin/sh -c npm install # buildkit           4.67MB    buildkit.dockerfile.v0
+<missing>      16 seconds ago   COPY . . # buildkit                             89.1kB    buildkit.dockerfile.v0
+<missing>      4 days ago       /bin/sh -c #(nop)  CMD ["node"]                 0B
+<missing>      4 days ago       /bin/sh -c #(nop)  ENTRYPOINT ["docker-entry…   0B
+<missing>      4 days ago       /bin/sh -c #(nop) COPY file:4d192565a7220e13…   388B
+<missing>      4 days ago       /bin/sh -c set -ex   && for key in     6A010…   7.59MB
+<missing>      4 days ago       /bin/sh -c #(nop)  ENV YARN_VERSION=1.22.19     0B
+<missing>      4 days ago       /bin/sh -c ARCH= && dpkgArch="$(dpkg --print…   98.5MB
+<missing>      4 days ago       /bin/sh -c #(nop)  ENV NODE_VERSION=16.20.0     0B
+<missing>      4 days ago       /bin/sh -c groupadd --gid 1000 node   && use…   334kB
+<missing>      5 days ago       /bin/sh -c set -ex;  apt-get update;  apt-ge…   510MB
+<missing>      5 days ago       /bin/sh -c apt-get update && apt-get install…   146MB
+<missing>      5 days ago       /bin/sh -c set -eux;  apt-get update;  apt-g…   33MB
+<missing>      5 days ago       /bin/sh -c #(nop)  CMD ["bash"]                 0B
+<missing>      5 days ago       /bin/sh -c #(nop) ADD file:54838b3dbf7839dad…   114MB
+
+# Image after optimization from Dockerfile.optimized
+
+ivanbrij@server01:~/express-app$ docker images express-app
+REPOSITORY    TAG       IMAGE ID       CREATED          SIZE
+express-app   latest    9d597dd0e1cd   12 seconds ago   122MB
+
+ivanbrij@server01:~/express-app$ docker image history express-app
+IMAGE          CREATED          CREATED BY                                      SIZE      COMMENT
+9d597dd0e1cd   20 seconds ago   ENTRYPOINT ["/bin/sh" "-c" "node index.js"]     0B        buildkit.dockerfile.v0
+<missing>      20 seconds ago   USER appuser                                    0B        buildkit.dockerfile.v0
+<missing>      20 seconds ago   RUN /bin/sh -c npm install  &&     adduser -…   4.89MB    buildkit.dockerfile.v0
+<missing>      21 seconds ago   COPY . . # buildkit                             89.3kB    buildkit.dockerfile.v0
+<missing>      2 hours ago      WORKDIR /usr/src/app                            0B        buildkit.dockerfile.v0
+<missing>      3 days ago       /bin/sh -c #(nop)  CMD ["node"]                 0B
+<missing>      3 days ago       /bin/sh -c #(nop)  ENTRYPOINT ["docker-entry…   0B
+<missing>      3 days ago       /bin/sh -c #(nop) COPY file:4d192565a7220e13…   388B
+<missing>      3 days ago       /bin/sh -c apk add --no-cache --virtual .bui…   7.76MB
+<missing>      3 days ago       /bin/sh -c #(nop)  ENV YARN_VERSION=1.22.19     0B
+<missing>      3 days ago       /bin/sh -c addgroup -g 1000 node     && addu…   102MB
+<missing>      3 days ago       /bin/sh -c #(nop)  ENV NODE_VERSION=16.20.0     0B
+<missing>      3 days ago       /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B
+<missing>      3 days ago       /bin/sh -c #(nop) ADD file:1da756d12551a0e3e…   7.33MB

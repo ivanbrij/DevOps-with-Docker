@@ -1,0 +1,123 @@
+### Image size changes for Frontend ###
+
+# Before optimization
+
+ivanbrij@server01:~/material-applications/example-frontend$ docker images example-frontend
+REPOSITORY         TAG       IMAGE ID       CREATED          SIZE
+example-frontend   latest    2b5d36c76972   36 minutes ago   1.26GB
+
+
+ivanbrij@server01:~/material-applications/example-frontend$ docker image history example-frontend
+IMAGE          CREATED          CREATED BY                                      SIZE      COMMENT
+2b5d36c76972   45 minutes ago   CMD ["serve" "-s" "-l" "5000" "build"]          0B        buildkit.dockerfile.v0
+<missing>      45 minutes ago   USER appuser                                    0B        buildkit.dockerfile.v0
+<missing>      45 minutes ago   RUN /bin/sh -c chown appuser . # buildkit       0B        buildkit.dockerfile.v0
+<missing>      45 minutes ago   RUN /bin/sh -c useradd -m appuser # buildkit    334kB     buildkit.dockerfile.v0
+<missing>      3 days ago       RUN /bin/sh -c npm install -g serve # buildk…   6.38MB    buildkit.dockerfile.v0
+<missing>      3 days ago       RUN /bin/sh -c npm run build # buildkit         8.68MB    buildkit.dockerfile.v0
+<missing>      3 days ago       RUN /bin/sh -c npm install # buildkit           336MB     buildkit.dockerfile.v0
+<missing>      3 days ago       COPY . . # buildkit                             707kB     buildkit.dockerfile.v0
+<missing>      3 days ago       WORKDIR /usr/src/app                            0B        buildkit.dockerfile.v0
+<missing>      3 days ago       EXPOSE map[5000/tcp:{}]                         0B        buildkit.dockerfile.v0
+<missing>      4 days ago       /bin/sh -c #(nop)  CMD ["node"]                 0B
+<missing>      4 days ago       /bin/sh -c #(nop)  ENTRYPOINT ["docker-entry…   0B
+<missing>      4 days ago       /bin/sh -c #(nop) COPY file:4d192565a7220e13…   388B
+<missing>      4 days ago       /bin/sh -c set -ex   && for key in     6A010…   7.59MB
+<missing>      4 days ago       /bin/sh -c #(nop)  ENV YARN_VERSION=1.22.19     0B
+<missing>      4 days ago       /bin/sh -c ARCH= && dpkgArch="$(dpkg --print…   98.5MB
+<missing>      4 days ago       /bin/sh -c #(nop)  ENV NODE_VERSION=16.20.0     0B
+<missing>      4 days ago       /bin/sh -c groupadd --gid 1000 node   && use…   334kB
+<missing>      5 days ago       /bin/sh -c set -ex;  apt-get update;  apt-ge…   510MB
+<missing>      5 days ago       /bin/sh -c apt-get update && apt-get install…   146MB
+<missing>      5 days ago       /bin/sh -c set -eux;  apt-get update;  apt-g…   33MB
+<missing>      5 days ago       /bin/sh -c #(nop)  CMD ["bash"]                 0B
+<missing>      5 days ago       /bin/sh -c #(nop) ADD file:54838b3dbf7839dad…   114MB
+
+# After optimization
+
+ivanbrij@server01:~/material-applications/example-frontend$ docker images example-frontend
+REPOSITORY         TAG       IMAGE ID       CREATED          SIZE
+example-frontend   latest    c7d111432926   56 seconds ago   1.26GB
+
+ivanbrij@server01:~/material-applications/example-frontend$ docker image history example-frontend
+IMAGE          CREATED              CREATED BY                                      SIZE      COMMENT
+c7d111432926   About a minute ago   CMD ["serve" "-s" "-l" "5000" "build"]          0B        buildkit.dockerfile.v0
+<missing>      About a minute ago   USER appuser                                    0B        buildkit.dockerfile.v0
+<missing>      About a minute ago   RUN /bin/sh -c npm ci --only=production &&  …   350MB     buildkit.dockerfile.v0
+<missing>      4 days ago           COPY . . # buildkit                             707kB     buildkit.dockerfile.v0
+<missing>      4 days ago           WORKDIR /usr/src/app                            0B        buildkit.dockerfile.v0
+<missing>      4 days ago           EXPOSE map[5000/tcp:{}]                         0B        buildkit.dockerfile.v0
+<missing>      4 days ago           /bin/sh -c #(nop)  CMD ["node"]                 0B
+<missing>      4 days ago           /bin/sh -c #(nop)  ENTRYPOINT ["docker-entry…   0B
+<missing>      4 days ago           /bin/sh -c #(nop) COPY file:4d192565a7220e13…   388B
+<missing>      4 days ago           /bin/sh -c set -ex   && for key in     6A010…   7.59MB
+<missing>      4 days ago           /bin/sh -c #(nop)  ENV YARN_VERSION=1.22.19     0B
+<missing>      4 days ago           /bin/sh -c ARCH= && dpkgArch="$(dpkg --print…   98.5MB
+<missing>      4 days ago           /bin/sh -c #(nop)  ENV NODE_VERSION=16.20.0     0B
+<missing>      4 days ago           /bin/sh -c groupadd --gid 1000 node   && use…   334kB
+<missing>      5 days ago           /bin/sh -c set -ex;  apt-get update;  apt-ge…   510MB
+<missing>      5 days ago           /bin/sh -c apt-get update && apt-get install…   146MB
+<missing>      5 days ago           /bin/sh -c set -eux;  apt-get update;  apt-g…   33MB
+<missing>      5 days ago           /bin/sh -c #(nop)  CMD ["bash"]                 0B
+<missing>      5 days ago           /bin/sh -c #(nop) ADD file:54838b3dbf7839dad…   114MB
+
+### Image size changes for backend ###
+
+# Before optimization
+
+ivanbrij@server01:~/material-applications/example-backend$ docker images example-backend
+REPOSITORY        TAG       IMAGE ID       CREATED             SIZE
+example-backend   latest    3c184715a7bf   About an hour ago   1.07GB
+
+ivanbrij@server01:~/material-applications/example-backend$ docker image history example-backend
+IMAGE          CREATED             CREATED BY                                      SIZE      COMMENT
+3c184715a7bf   About an hour ago   CMD ["/bin/sh" "-c" "./server"]                 0B        buildkit.dockerfile.v0
+<missing>      About an hour ago   USER appuser                                    0B        buildkit.dockerfile.v0
+<missing>      About an hour ago   RUN /bin/sh -c chown appuser . # buildkit       0B        buildkit.dockerfile.v0
+<missing>      About an hour ago   RUN /bin/sh -c adduser appuser # buildkit       334kB     buildkit.dockerfile.v0
+<missing>      4 days ago          RUN /bin/sh -c go build # buildkit              146MB     buildkit.dockerfile.v0
+<missing>      4 days ago          COPY . . # buildkit                             28.3kB    buildkit.dockerfile.v0
+<missing>      4 days ago          WORKDIR /usr/src/app                            0B        buildkit.dockerfile.v0
+<missing>      4 days ago          EXPOSE map[8080/tcp:{}]                         0B        buildkit.dockerfile.v0
+<missing>      15 months ago       /bin/sh -c #(nop) WORKDIR /go                   0B
+<missing>      15 months ago       /bin/sh -c mkdir -p "$GOPATH/src" "$GOPATH/b…   0B
+<missing>      15 months ago       /bin/sh -c #(nop)  ENV PATH=/go/bin:/usr/loc…   0B
+<missing>      15 months ago       /bin/sh -c #(nop)  ENV GOPATH=/go               0B
+<missing>      15 months ago       /bin/sh -c set -eux;  arch="$(dpkg --print-a…   387MB
+<missing>      15 months ago       /bin/sh -c #(nop)  ENV GOLANG_VERSION=1.16.15   0B
+<missing>      15 months ago       /bin/sh -c #(nop)  ENV PATH=/usr/local/go/bi…   0B
+<missing>      15 months ago       /bin/sh -c set -eux;  apt-get update;  apt-g…   227MB
+<missing>      15 months ago       /bin/sh -c apt-get update && apt-get install…   152MB
+<missing>      15 months ago       /bin/sh -c set -ex;  if ! command -v gpg > /…   18.9MB
+<missing>      15 months ago       /bin/sh -c set -eux;  apt-get update;  apt-g…   10.7MB
+<missing>      15 months ago       /bin/sh -c #(nop)  CMD ["bash"]                 0B
+<missing>      15 months ago       /bin/sh -c #(nop) ADD file:9c4db2a9644ee3029…   124MB
+
+# After optimization
+
+ivanbrij@server01:~/material-applications/example-backend$ docker images example-backend
+REPOSITORY        TAG       IMAGE ID       CREATED          SIZE
+example-backend   latest    bf7b48292ed2   10 seconds ago   1.07GB
+
+ivanbrij@server01:~/material-applications/example-backend$ docker image history example-backend
+IMAGE          CREATED          CREATED BY                                      SIZE      COMMENT
+bf7b48292ed2   14 seconds ago   CMD ["/bin/sh" "-c" "./server"]                 0B        buildkit.dockerfile.v0
+<missing>      14 seconds ago   USER appuser                                    0B        buildkit.dockerfile.v0
+<missing>      14 seconds ago   RUN /bin/sh -c go build && adduser appuser &…   146MB     buildkit.dockerfile.v0
+<missing>      4 days ago       COPY . . # buildkit                             28.3kB    buildkit.dockerfile.v0
+<missing>      4 days ago       WORKDIR /usr/src/app                            0B        buildkit.dockerfile.v0
+<missing>      4 days ago       EXPOSE map[8080/tcp:{}]                         0B        buildkit.dockerfile.v0
+<missing>      15 months ago    /bin/sh -c #(nop) WORKDIR /go                   0B
+<missing>      15 months ago    /bin/sh -c mkdir -p "$GOPATH/src" "$GOPATH/b…   0B
+<missing>      15 months ago    /bin/sh -c #(nop)  ENV PATH=/go/bin:/usr/loc…   0B
+<missing>      15 months ago    /bin/sh -c #(nop)  ENV GOPATH=/go               0B
+<missing>      15 months ago    /bin/sh -c set -eux;  arch="$(dpkg --print-a…   387MB
+<missing>      15 months ago    /bin/sh -c #(nop)  ENV GOLANG_VERSION=1.16.15   0B
+<missing>      15 months ago    /bin/sh -c #(nop)  ENV PATH=/usr/local/go/bi…   0B
+<missing>      15 months ago    /bin/sh -c set -eux;  apt-get update;  apt-g…   227MB
+<missing>      15 months ago    /bin/sh -c apt-get update && apt-get install…   152MB
+<missing>      15 months ago    /bin/sh -c set -ex;  if ! command -v gpg > /…   18.9MB
+<missing>      15 months ago    /bin/sh -c set -eux;  apt-get update;  apt-g…   10.7MB
+<missing>      15 months ago    /bin/sh -c #(nop)  CMD ["bash"]                 0B
+<missing>      15 months ago    /bin/sh -c #(nop) ADD file:9c4db2a9644ee3029…   124MB
+

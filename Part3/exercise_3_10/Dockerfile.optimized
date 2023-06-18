@@ -1,0 +1,13 @@
+# Change to apline version of the image
+FROM node:16-alpine
+# Select a proper directory
+WORKDIR /usr/src/app
+COPY . .
+# Run all build commands together
+RUN npm install  && \
+    adduser -D appuser && chown appuser .
+
+# Change to nonroot user
+USER appuser
+# Use ENTRYPOINT instead of CMD
+ENTRYPOINT node index.js
