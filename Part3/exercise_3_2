@@ -1,0 +1,13 @@
+### Repository ###
+
+https://github.com/ivanbrij/express-app
+
+### Workflow ###
+
+The workflow is from GCP official documentation for deploying into Cloud Run from source
+
+https://github.com/ivanbrij/express-app/blob/main/.github/workflows/google-cloudrun-source.yml
+
+### App running on GCP Cloud Run ###
+
+https://express-app-3sxy5yiznq-uw.a.run.app/

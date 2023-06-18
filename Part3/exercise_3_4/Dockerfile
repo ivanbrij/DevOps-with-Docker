@@ -1,0 +1,11 @@
+FROM docker:git
+
+COPY . .
+
+ARG DOCKER_USER=user
+ARG DOCKER_PWD=pass
+
+ENV DOCKER_USER $DOCKER_USER
+ENV DOCKER_PWD $DOCKER_PWD 
+
+ENTRYPOINT ["sh", "builder.sh"]
